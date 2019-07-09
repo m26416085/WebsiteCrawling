@@ -37,13 +37,43 @@ function http_request($url)
         session_start();
         if (!isset($_SESSION['cart_item'])) {
             $_SESSION['cart_item'] = array();
-            echo "masuk create";
         }
         else{
-            // array_push($_SESSION['cart_item'], $_GET['id_product']);
-            array_push($_SESSION['cart_item'], $i);
-            print_r($_SESSION['cart_item']);
-            echo "bukan create";
+            error_reporting(0);
+            if ($_GET['check'] == "1"){
+                // array_push($_SESSION['cart_item'], $_GET['id_product']);
+                $count = 0;
+                $same = 0;
+                foreach($_SESSION['cart_item'] as $item){
+                    if ($_SESSION['cart_item'][$count]['id'] == $_GET['id']){
+                        $same++;
+                    }
+                    $count++;
+                }
+
+                if ($same <= 0){
+                    $_SESSION['cart_item'][] = Array('id' => $_GET['id'], 'name' => $_GET['name'], 'price_format' => $_GET['price_format'], 'image' => $_GET['image'], 'shop_name' => $_GET['shop_name']);
+                }
+                else{
+                    echo '<script> alert("Sudah ada dalam list") </script>';
+                }
+                
+                //$_SESSION['cart_item'][] += array($_GET['name'] => $_GET['price_format']);
+                
+                // print "<pre>";
+                // print_r($_SESSION['cart_item']);
+                // print "</pre>";
+                
+                $count = 0;
+                foreach($_SESSION['cart_item'] as $item){
+                    echo "<img style='width: 100px;' src=".$_SESSION['cart_item'][$count]['image']."><br>";
+                    echo $_SESSION['cart_item'][$count]['name']."<br>";
+                    echo $_SESSION['cart_item'][$count]['price_format']."<br>";
+                    echo $_SESSION['cart_item'][$count]['shop_name']."<br><br>";
+                    
+                    $count++;
+                }
+            }
         }
     ?>
     <form action="index.php" method="POST">
@@ -86,7 +116,7 @@ function http_request($url)
         echo $data["data"][$i]["shop"]["name"] . '<br>';
         echo $data["data"][$i]["shop"]["location"] . '<br>';
         echo '<a href=' . $data["data"][$i]["product"]["uri"] . '>Link</a>' . '<br>';
-        echo '<a href="index.php?id_product=' . $data["data"][$i]["id"] . '&search='.$search.'" id="addtocart">Add to Cart</a><br><br>';
+        echo '<a href="index.php?id='.$data["data"][$i]["product"]["id"].'&name=' . $data["data"][$i]["product"]["name"] .'&price_format='.$data["data"][$i]["product"]["price_format"].'&image='.$data["data"][$i]["product"]["image"]["m_url"].'&shop_name='.$data["data"][$i]["shop"]["name"].'&check=1'.'&search='.$search.'" id="addtocart">Add to Cart</a><br><br>';
         $i = $i + 1;
     }
 ?>
