@@ -30,7 +30,7 @@ if (isset($_POST['find']))
         $search = str_replace(' ', '%20', $search);
 
         //url search
-        $url = "https://shopee.co.id/api/v2/search_items/?by=relevancy&keyword=".$search."&limit=10&newest=0&order=desc&page_type=search";
+        $url = "https://shopee.co.id/api/v2/search_items/?by=relevancy&keyword=".$search."&limit=50&newest=0&order=desc&page_type=search";
 
         //dapat id semua item
         $profile = http_request($url);
@@ -67,7 +67,7 @@ if (isset($_POST['find']))
 
             $link_detail = 'https://shopee.co.id/'.str_replace(' ', '-', $profile["items"][$x]["name"]).'-i.'.$data_detail["item"]["shopid"].'.'.$data_detail["item"]["itemid"];
 
-            echo '<img src='.$img_url.'><br>';
+            echo '<img style="width:350px"src='.$img_url.'><br>';
             echo $profile["items"][$x]["name"].'<br>';
             echo 'Rp '.$price.'<br>';
             echo $shop_name.'<br>';
