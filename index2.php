@@ -1,5 +1,5 @@
 <?php
-
+ini_set('max_execution_time', 300); 
 function http_request($url){
 
     $ch = curl_init(); 
@@ -30,7 +30,7 @@ if (isset($_POST['find']))
         $search = str_replace(' ', '%20', $search);
 
         //url search
-        $url = "https://shopee.co.id/api/v2/search_items/?by=relevancy&keyword=".$search."&limit=10&newest=0&order=desc&page_type=search";
+        $url = "https://shopee.co.id/api/v2/search_items/?by=relevancy&keyword=".$search."&limit=100&newest=0&order=desc&page_type=search";
 
         //dapat id semua item
         $profile = http_request($url);
