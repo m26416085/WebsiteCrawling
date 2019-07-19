@@ -30,7 +30,7 @@ if (isset($_POST['find']))
         $search = str_replace(' ', '%20', $search);
 
         //url search
-
+        //newest diubah berubah listnya
         $url = "https://shopee.co.id/api/v2/search_items/?by=relevancy&keyword=".$search."&limit=50&newest=0&order=desc&page_type=search";
 
 
